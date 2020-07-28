@@ -1,0 +1,60 @@
+import random
+import matplotlib.pyplot as plt
+
+%matplotlib inline
+
+fig, ax1 = plt.subplots(figsize=(10,10))
+%config InlineBackend.figure_formats = {'png', 'retina'}
+
+def county_total(no_of_counties,step, state, state_list):
+    county_list=[]
+    for i in range(no_of_counties):
+    #Generate a random number of cases/day in this county
+        county_number=random.randrange(step)
+        county_list.append(county_number)
+        #plt.hist(county_list, bins = days_in_pandemic*4)
+        big_list.append(county_number)
+    big_list.append(sum(county_list))
+    state_list.append(sum(county_list))
+    #print("State:",state+1,"County Cases:", county_list)
+    return state_list
+
+def state_total(no_of_states):
+    state_list = []
+    for state in range(no_of_states):
+        state_list = county_total(no_of_counties, step, state, state_list)
+    #print("State List:", state_list)
+    #print("Big List:", big_list)
+    #print("Total Cases, Day ", day+1, ":", sum(state_list))
+    #plt.hist(state_list, bins = days_in_pandemic*4)
+        
+#Set cases in county to 0
+county_number=0
+
+#Set case lists (county, state, country) to 0
+county_list=[]
+state_list=[]
+big_list=[]
+
+#Set the uptick in the maximum number of infections per day per county
+step=2
+
+#Set number of counties and states
+no_of_states = 50
+#Average number of counties per state
+no_of_counties = 62
+
+#Set the number of days in the pandemic
+days_in_pandemic = 5
+
+for day in range(days_in_pandemic):
+    #print("Day:",day+1)
+    state_total(no_of_states)
+    step = step+(random.randrange(2))
+
+plt.hist(big_list, bins = days_in_pandemic*4)
+plt.ylim((0,100))
+
+plt.xlabel('New Cases Reported')
+plt.ylabel('Number of Reports')
+plt.title('New Cases Reported by 50 States/62 Counties in a Pandemic (5 days)')
